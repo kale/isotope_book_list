@@ -1,12 +1,94 @@
+<html>
+	<head>
+		<!-- TODO: Need to put on local server... -->
+		<link type="text/css" href="http://taitems.github.com/Aristo-jQuery-UI-Theme/css/Aristo/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script> 
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script> 
+		<script src="http://isotope.metafizzy.co/jquery.isotope.min.js"></script> 
+		<script type="text/javascript"> 
+			$(function(){
+					var $books = $("#books").isotope({
+						itemSelector: '.book',
+						layoutMode: 'fitRows',
+						getSortData : {
+							SalesRank : function( $elem ) {
+										  return $elem.find('.salesrank').html();
+									  },
+							Price : function( $elem ) {
+										  return $elem.find('.price').html();
+									  },
+							Title : function( $elem ) {
+										return $elem.find('.title> a').html();
+									  },
+							subjects : function( $elem ) {
+										  return $elem.find('.subjects').html();
+									  },
+							subjects : function( $elem ) {
+										  return $elem.attr('data-symbol');
+									  },
+								  }
+						});
+
+					$books.addClass('ui-widget-content');
+					$("#sort1")
+						.button({ icons: { primary: 'ui-icon-tag'} })
+						.click(function() { $books.isotope({ sortBy: "Price"}); });
+					$("#sort2")
+						.button({ icons: { primary: 'ui-icon-comment'} })
+						.click(function() { $books.isotope({ sortBy: "Title"}); });
+					$("#sorters> li").each(function() {
+							$(this)
+								.button({ icons: { primary: $(this).attr('iconimg')} })
+								.click(function() { $books.isotope({ sortBy: $(this).attr('sortBy')}); });
+						});
+					$("#filters> li")
+						.button({
+								icons: { primary: 'ui-icon-arrowreturn-1-e'}
+							})
+						.click(function() { $books.isotope({ filter: $(this).attr('data-filter')}); });
+			});
+		</script>
+	</head>
+<body>
+
+
+
 <style>
-  .book {float: left; padding: 20px; height: 200px; width: 150px;}
-  .subjects {display: none;}
-  h2 {display: none;}
+	.book {float: left; padding: 20px; height: 200px; width: 150px; font-size: 80%;}
+	.subjects {display: none;}
+	h2 {display: none;}
+
+	/**** Isotope filtering ****/
+	.isotope-item {
+		z-index: 2;
+	}
+	.isotope-hidden.isotope-item {
+		pointer-events: none;
+		z-index: 1;
+	}
 </style>
 
+<div id="controls">
+	<div id="sort1">Price</div>
+	<div id="sort2">title</div>
+	<!-- or.. -->
+	<ul id="Sorters">
+		<li iconimg="ui-icon-tag" sortBy="Price">Price</li>
+		<li iconimg="ui-icon-comment" sortBy="Title">Title</li>
+		<li iconimg="ui-icon-shuffle" sortBy="SalesRank">Sales Rank</li>
+		<li iconimg="ui-icon-contact" sortBy="subjects">Subjects</li>
+	</ul>
+	<ul id="filters">
+		<li data-filter='*'>All</li>
+		<li data-filter='.isotope-hidden'>Inverse</li>
+		<li data-filter=':has(p.subjects)'>Listed Subjects</li>
+		<li data-filter=':contains("Ajax")'>Ajax</li>
+	</ul>
+</div>
+<br />
 <div id="books">
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/51dx1LkrzqL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Hero-Ages-Book-Three-Mistborn/dp/0765356147%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0765356147">The Hero of Ages: Book Three of Mistborn</a></h2>
     <p class="salesrank">20309</p>
@@ -14,19 +96,19 @@
     <p class="subjects">["Books", "Subjects", "Books & Reading", "British", "Classics", "Comic", "Drama", "Erotica", "Essays", "Foreign Language Fiction", "Genre Fiction", "History & Criticism", "Letters & Correspondence", "Literary", "Poetry", "Short Stories", "United States", "World Literature", "Literature & Fiction"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/51sPgKTeqHL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Suarezs-Daemon-Daniel-Suarez-Paperback/dp/B0037DM3ZW%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0037DM3ZW">Suarez's Daemon (Daemon by Daniel Suarez (Paperback - Dec. 29, 2009))</a></h2>
     <p class="salesrank">565384</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/41hpA8%2Blr1L._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Sandra-Blakeslee-Hawkins-Intelligence-Paperback/dp/B004Q6O870%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB004Q6O870">by Sandra Blakeslee,by Jeff Hawkins On Intelligence(text only)[Paperback]2005</a></h2>
     <p class="salesrank"></p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/51fHlS9vK2L._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Ruby-Rails-Tutorial-Addison-Wesley-Professional/dp/0321743121%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0321743121">Ruby on Rails 3 Tutorial: Learn Rails by Example (Addison-Wesley Professional Ruby Series)</a></h2>
     <p class="salesrank">3595</p>
@@ -34,7 +116,7 @@
     <p class="subjects">["Books", "Subjects", "Computers & Internet", "Programming", "Ajax", "Assembly Language Programming", "Borland Delphi", "CSS", "Compiler Design", "Compilers", "Fortran", "Lisp", "Prolog", "Python", "Visual Basic", "XHTML", "XML", "Languages & Tools"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/41Jxy32UrCL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/2001-Odyssey-Arthur-C-Clarke/dp/0451457994%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0451457994">2001: A Space Odyssey</a></h2>
     <p class="salesrank">11999</p>
@@ -42,7 +124,7 @@
     <p class="subjects">["Books", "Subjects", "Literature & Fiction", "Classics"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/31u2ffsdpiL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Discrete-Mathematics-Applications-Kenneth-Rosen/dp/0071244743%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0071244743">Discrete Mathematics and Its Applications</a></h2>
     <p class="salesrank">583203</p>
@@ -50,7 +132,7 @@
     <p class="subjects">[]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/41ygBmdaIfL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Metaprogramming-Ruby-Program-Like-Pros/dp/1934356476%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D1934356476">Metaprogramming Ruby: Program Like the Ruby Pros</a></h2>
     <p class="salesrank">42220</p>
@@ -58,7 +140,7 @@
     <p class="subjects">["Books", "Subjects", "Computers & Internet", "Programming", "Ajax", "Assembly Language Programming", "Borland Delphi", "CSS", "Compiler Design", "Compilers", "Fortran", "Lisp", "Prolog", "Python", "Visual Basic", "XHTML", "XML", "Languages & Tools"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/51v-ThhvC-L._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Wealthy-Freelancer-Secrets-Enviable-Lifestyle/dp/1592579671%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D1592579671">The Wealthy Freelancer: 12 Secrets to a Great Income and an Enviable Lifestyle</a></h2>
     <p class="salesrank">16701</p>
@@ -66,7 +148,7 @@
     <p class="subjects">["Books", "Subjects", "Business & Investing", "Job Hunting & Careers", "Guides"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/41qwcGl5ghL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Programming-Ruby-Pragmatic-Programmers-Second/dp/0974514055%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0974514055">Programming Ruby: The Pragmatic Programmers' Guide, Second Edition</a></h2>
     <p class="salesrank">77924</p>
@@ -74,7 +156,7 @@
     <p class="subjects">["Books", "Subjects", "Computers & Internet", "Programming", "Ajax", "Assembly Language Programming", "Borland Delphi", "CSS", "Compiler Design", "Compilers", "Fortran", "Lisp", "Prolog", "Python", "Visual Basic", "XHTML", "XML", "Languages & Tools"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/517DIcTNYrL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Programming-Environment-Addison-Wesley-Professional-Computing/dp/0321525949%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0321525949">Advanced Programming in the UNIX Environment, Second Edition (Addison-Wesley Professional Computing Series)</a></h2>
     <p class="salesrank">61293</p>
@@ -82,7 +164,7 @@
     <p class="subjects">["Books", "Subjects", "Computers & Internet", "Operating Systems", "AIX", "Administration", "Shell", "Unix"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/413Fl-9dj-L._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/CUDA-Example-Introduction-General-Purpose-Programming/dp/0131387685%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0131387685">CUDA by Example: An Introduction to General-Purpose GPU Programming</a></h2>
     <p class="salesrank">14013</p>
@@ -90,7 +172,7 @@
     <p class="subjects">["Books", "Subjects", "Computers & Internet", "Hardware", "Design & Architecture"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/41JT8EK0dsL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Happiness-Advantage-Principles-Psychology-Performance/dp/0307591549%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0307591549">The Happiness Advantage: The Seven Principles of Positive Psychology That Fuel Success and Performance at Work</a></h2>
     <p class="salesrank">1992</p>
@@ -98,7 +180,7 @@
     <p class="subjects">["Books", "Subjects", "Business & Investing", "Management & Leadership", "Motivational"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/61BnyIxUqML._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Beautiful-Visualization-Looking-through-Experts/dp/1449379869%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D1449379869">Beautiful Visualization: Looking at Data through the Eyes of Experts</a></h2>
     <p class="salesrank">46275</p>
@@ -106,7 +188,7 @@
     <p class="subjects">["Books", "Subjects", "Home Computing", "Apple", "Business & Culture", "Certification Central", "Computer Science", "Databases", "Digital Music", "Digital Photography & Video", "Games & Strategy Guides", "Graphic Design", "Hardware", "Microsoft", "Mobile & Wireless Computing", "Networking", "Operating Systems", "Programming", "Project Management", "Security & Encryption", "Software", "Web Development", "Computers & Internet"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/51foanUeChL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Hackers-Painters-ebook/dp/B0026OR2NQ%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0026OR2NQ">Hackers & Painters</a></h2>
     <p class="salesrank">34812</p>
@@ -114,7 +196,7 @@
     <p class="subjects">["Books", "Subjects", "Computers & Internet", "Business & Culture", "Hacking"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/412Z9FE2E6L._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Dune-40th-Anniversary-Chronicles-Book/dp/0441013597%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0441013597">Dune, 40th Anniversary Edition (Dune Chronicles, Book 1)</a></h2>
     <p class="salesrank">6924</p>
@@ -122,7 +204,7 @@
     <p class="subjects">[]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/31YPiGaN%2BCL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Crazy-Love-Overwhelmed-Relentless-God/dp/1434768511%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D1434768511">Crazy Love: Overwhelmed by a Relentless God</a></h2>
     <p class="salesrank">60</p>
@@ -130,7 +212,7 @@
     <p class="subjects">[]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/41OSuh5vFDL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/4-Hour-Body-Uncommon-Incredible-Superhuman/dp/030746363X%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D030746363X">The 4-Hour Body: An Uncommon Guide to Rapid Fat-Loss, Incredible Sex, and Becoming Superhuman</a></h2>
     <p class="salesrank">20</p>
@@ -138,13 +220,13 @@
     <p class="subjects">["Books", "Subjects", "Health, Mind & Body", "Diets & Weight Loss", "Diets"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/31u1wIbAl3L._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Jonathan-Strange-Norrell-Rosenberg-Illustrator/dp/B004HSL8LG%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB004HSL8LG">Jonathan Strange and Mr. Norrell by Susanna Clarke, Portia Rosenberg (Illustrator)</a></h2>
     <p class="salesrank"></p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/519uLG8YD1L._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Information-History-Theory-Flood/dp/0375423729%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0375423729">The Information: A History, a Theory, a Flood</a></h2>
     <p class="salesrank">44</p>
@@ -152,13 +234,13 @@
     <p class="subjects">["Books", "Subjects", "Computers & Internet", "Business & Culture", "History"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/419YNSDY4qL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Chelimsky-Astels-Helmkamp-Dennis-Hellesoy/dp/B004OI5WCU%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB004OI5WCU">by David Chelimsky,by Dave Astels,by Bryan Helmkamp,by Dan North,by Zach Dennis ,by Aslak Hellesoy The RSpec Book: Behaviour Driven Development with Rspec, Cucumber, and Friends (The Facets of Ruby Series)(text only)1st (First) edition[Paperback]2010</a></h2>
     <p class="salesrank"></p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/41%2BYyF3LeWL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/What-You-See-Get-Autobiography/dp/0230750567%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0230750567">What You See Is What You Get: My Autobiography</a></h2>
     <p class="salesrank">1038291</p>
@@ -166,7 +248,7 @@
     <p class="subjects">[]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/41Ro3yiuddL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/OpenGL-Programming-Guide-Official-Learning/dp/0321552628%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0321552628">OpenGL Programming Guide: The Official Guide to Learning OpenGL, Versions 3.0 and 3.1 (7th Edition)</a></h2>
     <p class="salesrank">68022</p>
@@ -174,7 +256,7 @@
     <p class="subjects">["Books", "Subjects", "Computers & Internet", "Programming", "Graphics & Multimedia", "OpenGL"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/51XtGJ64tZL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Compilers-Principles-Techniques-Tools-2nd/dp/0321486811%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0321486811">Compilers: Principles, Techniques, and Tools (2nd Edition)</a></h2>
     <p class="salesrank">122272</p>
@@ -182,7 +264,7 @@
     <p class="subjects">["Books", "Subjects", "Computers & Internet", "Hardware", "Embedded Systems", "Microprocessor Design", "PIC Microcontroller", "Microprocessors & System Design"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/41pWJt5ApVL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Poke-Box-Seth-Godin/dp/1936719002%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D1936719002">Poke the Box</a></h2>
     <p class="salesrank">106</p>
@@ -190,19 +272,19 @@
     <p class="subjects">["Books", "Subjects", "Business & Investing", "Management & Leadership", "Motivational"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/517EaneJ5LL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Novels-Iain-Banks-Study-Guide/dp/1156856434%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D1156856434">Novels by Iain M. Banks (Study Guide): Consider Phlebas, Excession, the Player of Games, Use of Weapons, Look to Windward, Inversions</a></h2>
     <p class="salesrank">6061290</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/518uVSVmR%2BL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/byJessicaLivingston-Founders-Work-EarlyDays-Problem-Solution/dp/B004LWMEDY%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB004LWMEDY">byJessicaLivingston Founders at Work:Stories of Startups' EarlyDays (Recipes:a Problem-Solution Ap)(text only)1st (First) edition[Paperback]2008</a></h2>
     <p class="salesrank"></p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/51T4YZ3HieL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Refactoring-Improving-Design-Existing-Code/dp/0201485672%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0201485672">Refactoring: Improving the Design of Existing Code</a></h2>
     <p class="salesrank">14752</p>
@@ -210,13 +292,13 @@
     <p class="subjects">["Books", "Subjects", "Computers & Internet", "Computer Science", "Software Engineering", "Design Tools & Techniques"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/41qdYcpb%2BgL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Hugh-MacLeod-Everybody-Creativity-Audiobook/dp/B004FOOU7G%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB004FOOU7G">By Hugh MacLeod: Ignore Everybody: And 39 Other Keys to Creativity [Audiobook]</a></h2>
     <p class="salesrank"></p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/41dRkn1rySL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/What-Dog-Saw-Other-Adventures/dp/0316076201%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0316076201">What the Dog Saw: And Other Adventures</a></h2>
     <p class="salesrank">1020</p>
@@ -224,7 +306,7 @@
     <p class="subjects">["Books", "Subjects", "Accounting", "Biography & History", "Business Life", "Economics", "Finance", "Industries & Professions", "International", "Investing", "Job Hunting & Careers", "Management & Leadership", "Marketing & Sales", "Organizational Behavior", "Personal Finance", "Popular Economics", "Real Estate", "Reference", "Skills", "Small Business & Entrepreneurship", "Women & Business", "Business & Investing"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/41lrqAEHKBL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Blink-Power-Thinking-Without/dp/0316010669%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0316010669">Blink: The Power of Thinking Without Thinking</a></h2>
     <p class="salesrank">170</p>
@@ -232,7 +314,7 @@
     <p class="subjects">["Books", "Subjects", "Business & Investing", "Management & Leadership"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/51urSsnG8%2BL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Blur-Know-Whats-Information-Overload/dp/159691565X%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D159691565X">Blur: How to Know What's True in the Age of Information Overload</a></h2>
     <p class="salesrank">104871</p>
@@ -240,7 +322,7 @@
     <p class="subjects">["Books", "Subjects", "Nonfiction", "Social Sciences"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/51UOc2SQyWL._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Agile-Estimating-Planning-Mike-Cohn/dp/0131479415%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0131479415">Agile Estimating and Planning</a></h2>
     <p class="salesrank">13915</p>
@@ -248,7 +330,7 @@
     <p class="subjects">["Books", "Subjects", "Computers & Internet", "Computer Science", "Design Tools & Techniques", "Information Systems", "Methodology", "Multimedia Information Systems", "Software Engineering"]</p>
   </div>
 
-  <div class="book" style="font-size: 80%">
+  <div class="book">
     <img src="http://ecx.images-amazon.com/images/I/41YXAOWlS1L._SL160_.jpg"/>
     <h2 class="title"><a href="http://www.amazon.com/Parentonomics-Economist-Dad-Looks-Parenting/dp/0262514974%3FSubscriptionId%3DAKIAIJ7ILTHT3NAFDDPQ%26tag%3Dhnl-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0262514974">Parentonomics: An Economist Dad Looks at Parenting</a></h2>
     <p class="salesrank">1092151</p>
@@ -257,3 +339,6 @@
   </div>
 
 </div>
+
+</body>
+</html>
